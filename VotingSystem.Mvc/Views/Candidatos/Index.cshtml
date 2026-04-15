@@ -1,0 +1,46 @@
+@model List<CandidatoViewModel>
+
+<h2>Candidatos</h2>
+
+<a asp-action="Create" class="btn btn-success mb-3">➕ Nuevo Candidato</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Grupo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>
+                <img src="@c.FotoUrl" width="60" class="rounded" />
+            </td>
+            <td>@c.Nombre</td>
+            <td>@c.Grupo</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@c.Id" class="btn btn-primary btn-sm">
+                    ✏️ Editar
+                </a>
+
+                <button class="btn btn-danger btn-sm"
+                        onclick="confirmDelete('@c.Id')">
+                    🗑 Eliminar
+                </button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<script>
+    function confirmDelete(id) {
+        if (confirm("¿Estás seguro de eliminar este candidato?")) {
+            window.location.href = '/Candidatos/Delete/' + id;
+        }
+    }
+</script>

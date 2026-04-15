@@ -1,0 +1,25 @@
+@model CandidatoViewModel
+
+<h2>Editar Candidato</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label>Nombre</label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Grupo</label>
+        <input asp-for="Grupo" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Foto URL</label>
+        <input asp-for="FotoUrl" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
