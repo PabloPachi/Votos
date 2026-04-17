@@ -18,7 +18,7 @@
     {
         <tr>
             <td>
-                <img src="@c.FotoUrl" width="60" class="rounded" />
+                <img src="@(c.FotoUrl ?? "/images/default.png")" width="60" class="rounded" />
             </td>
             <td>@c.Nombre</td>
             <td>@c.Grupo</td>

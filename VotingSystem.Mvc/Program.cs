@@ -1,11 +1,15 @@
+using OfficeOpenXml;
+
 var builder = WebApplication.CreateBuilder(args);
+
+ExcelPackage.License.SetNonCommercialPersonal("Sistema Votación");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient("api", client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5234/"); // tu API
+    client.BaseAddress = new Uri("http://localhost:5001/"); // tu API
 });
 
 var app = builder.Build();

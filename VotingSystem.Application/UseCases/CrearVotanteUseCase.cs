@@ -42,7 +42,7 @@ public class CrearVotanteUseCase
         var votante = new Votante
         {
             Id = Guid.NewGuid(),
-            Codigo = codigoFinal,
+            Codigo = codigoFinal.ToUpper(),
             Grado = request.Grado,
             Paralelo = request.Paralelo,
             Paterno = paterno,

@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "API",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/VotingSystem.API/bin/Debug/net10.0/VotingSystem.API.dll",
+      "cwd": "${workspaceFolder}/VotingSystem.API",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    {
+      "name": "MVC",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/VotingSystem.Mvc/bin/Debug/net10.0/VotingSystem.Mvc.dll",
+      "cwd": "${workspaceFolder}/VotingSystem.Mvc",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "API + MVC",
+      "configurations": ["API", "MVC"]
+    }
+  ]
+}

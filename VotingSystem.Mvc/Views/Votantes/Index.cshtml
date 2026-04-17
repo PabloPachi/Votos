@@ -1,0 +1,95 @@
+@model VotantesFiltroViewModel
+
+<h2>Votantes</h2>
+
+<form method="get" asp-action="Index" class="mb-3">
+
+    <select name="curso" class="form-control d-inline w-auto">
+        <option value="">Curso</option>
+        @foreach (var c in Model.Cursos)
+        {
+            <option value="@c" selected="@(Model.Curso == c)">
+                @c
+            </option>
+        }
+    </select>
+
+    <button type="submit" class="btn btn-primary">Ver</button>
+</form>
+
+<a asp-action="Create" class="btn btn-success mb-3">➕ Nuevo Votante</a>
+<a asp-action="ExportarExcel"
+   class="btn btn-secondary mb-3 no-splash">
+   💾 Exportar todos a Excel
+</a>
+<a asp-action="HabilitarTodos"
+   class="btn btn-warning mb-3">
+    ✅ Habilitar todos
+</a>
+<a asp-action="DeshabilitarTodos"
+   class="btn btn-warning mb-3">
+    ❌ Deshabilitar todos
+</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Curso</th>
+            <th>Habilitado</th>
+            <th>Ya Votó</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model.Votantes)
+        {
+            <tr>
+                <td>@v.Codigo</td>
+                <td>@v.Paterno @v.Materno @v.Nombre</td>
+                <td>@v.Grado @v.Paralelo</td>
+                <td>@((v.Habilitado) ? "SI" : "NO")</td>
+                <td>@((v.YaVoto) ? "SI" : "NO")</td>
+                <td>
+                    <!-- 🔥 HABILITAR -->
+                    @if (!v.Habilitado && !v.YaVoto)
+                    {
+                        <a asp-action="Habilitar" asp-route-codigo="@v.Codigo" asp-route-curso="@Model.Curso"
+                               class="btn btn-warning btn-sm">
+                            ✅ Habilitar
+                        </a>
+                    }
+
+                    <a asp-action="Edit" asp-route-codigo="@v.Codigo" class="btn btn-primary btn-sm">
+                        ✏️ Editar
+                    </a>
+
+                    <button class="btn btn-danger btn-sm" onclick="confirmDelete('@v.Codigo', '@Model.Curso')">
+                        🗑 Eliminar
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function confirmDelete(codigo, curso) {
+        if (confirm("¿Eliminar este votante?")) {
+            let url = '/Votantes/Delete/${encodeURIComponent(codigo)}?curso=${curso}';
+            window.location.href = url;
+        }
+    }
+        function confirmHabilitarTodos() {
+        if (confirm("¿Eliminar este votante?")) {
+            let url = '/Votantes/Delete/${encodeURIComponent(codigo)}?curso=${curso}';
+            window.location.href = url;
+        }
+    }
+        function confirmDeshabilitarTodos() {
+        if (confirm("¿Eliminar este votante?")) {
+            let url = '/Votantes/Delete/${encodeURIComponent(codigo)}?curso=${curso}';
+            window.location.href = url;
+        }
+    }
+</script>

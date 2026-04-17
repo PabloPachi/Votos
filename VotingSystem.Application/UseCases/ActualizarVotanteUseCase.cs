@@ -13,9 +13,9 @@ public class ActualizarVotanteUseCase
         _repo = repo;
     }
 
-    public async Task Execute(ActualizarVotanteRequest request)
+    public async Task Execute(string codigo, ActualizarVotanteRequest request)
     {
-        var votante = await _repo.GetByCodigoAsync(request.Codigo);
+        var votante = await _repo.GetByCodigoAsync(codigo.ToUpper());
 
         if (votante == null)
             throw new Exception("Votante no encontrado");

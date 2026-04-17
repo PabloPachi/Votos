@@ -29,11 +29,13 @@ public class CsvVotanteReader : IFileVotanteReader
 
             if (columns.Length < 5)
                 continue;
+            string curso = columns[0].Trim();
+
             string paterno = string.IsNullOrEmpty(columns[2].Trim()) ? "_" : columns[2].Trim();
             string materno = string.IsNullOrEmpty(columns[3].Trim()) ? "_" : columns[3].Trim();
             string nombre = string.IsNullOrEmpty(columns[4].Trim()) ? "_" : columns[4].Trim();
 
-            string baseCodigo = $"{columns[0].Trim()}{columns[1].Trim()}{paterno[0]}{materno[0]}{nombre[0]}";
+            string baseCodigo = $"{(curso?.Length <= 2 ? curso : curso.Substring(0, 2))}{columns[1].Trim()}{paterno[0]}{materno[0]}{nombre[0]}";
             string codigoFinal = baseCodigo;
             while (votantes.Exists(r => r.Codigo == codigoFinal))
             {
@@ -43,7 +45,7 @@ public class CsvVotanteReader : IFileVotanteReader
             var votante = new Votante
             {
                 Id = Guid.NewGuid(),
-                Codigo = codigoFinal,
+                Codigo = codigoFinal.ToUpper(),
                 Grado = columns[0].Trim(),
                 Paralelo = columns[1].Trim(),
                 Paterno = columns[2].Trim(),

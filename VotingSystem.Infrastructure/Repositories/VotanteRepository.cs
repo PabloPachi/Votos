@@ -16,12 +16,19 @@ public class VotanteRepository : IVotanteRepository
 
     public async Task<Votante?> GetByCodigoAsync(string codigo)
     {
-        return await _context.Votantes.Where(v => v.Codigo == codigo).FirstOrDefaultAsync();
+        return await _context.Votantes.Where(v => v.Codigo == codigo.ToUpper()).FirstOrDefaultAsync();
     }
 
     public async Task<List<Votante>> GetAllAsync()
     {
-        return await _context.Votantes.ToListAsync();
+        return await _context.Votantes
+        .Where(v => v.Activo == true)
+                .OrderBy(v => v.Grado)
+                .ThenBy(v => v.Paralelo)
+                .ThenBy(v => v.Paterno)
+                .ThenBy(v => v.Materno)
+                .ThenBy(v => v.Nombre)
+        .ToListAsync();
     }
 
     public async Task AddAsync(Votante votante)
@@ -39,7 +46,7 @@ public class VotanteRepository : IVotanteRepository
     public async Task<List<Votante>> GetByGradoParaleloAsync(string grado, string paralelo)
     {
         return await _context.Votantes
-            .Where(v => v.Grado == grado && v.Paralelo == paralelo)
+            .Where(v => v.Grado == grado && v.Paralelo == paralelo && v.Activo == true)
                 .OrderBy(v => v.Paterno)
                 .ThenBy(v => v.Materno)
                 .ThenBy(v => v.Nombre)
@@ -53,7 +60,7 @@ public class VotanteRepository : IVotanteRepository
 
     public async Task DeleteAsync(string codigo)
     {
-        var votante = await _context.Votantes.Where(v => v.Codigo == codigo).FirstOrDefaultAsync();
+        var votante = await _context.Votantes.Where(v => v.Codigo == codigo.ToUpper()).FirstOrDefaultAsync();
         if (votante == null)
             return;
         votante.Activo = false;
@@ -66,5 +73,23 @@ public class VotanteRepository : IVotanteRepository
             .Where(v => v.Codigo.StartsWith(prefix))
             .Select(v => v.Codigo)
             .ToListAsync();
+    }
+
+    public async Task<List<string>> GetGradoParaleloAsync()
+    {
+        return await _context.Votantes
+            .Where(v => v.Activo == true)
+            .Select(v => v.Grado + "-" + v.Paralelo )
+            .Distinct()
+            .OrderBy(x => x)
+            .ToListAsync();
+    }
+
+    public async Task MakeAllAsync(bool habilitado)
+    {
+        await _context.Votantes
+        .ExecuteUpdateAsync(setters => setters
+            .SetProperty(v => v.Habilitado, habilitado)
+        );
     }
 }

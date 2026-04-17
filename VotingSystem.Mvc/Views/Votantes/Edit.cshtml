@@ -1,0 +1,23 @@
+@model VotanteViewModel
+
+<h2>Editar Votante</h2>
+
+<form asp-action="Edit" method="post">
+
+    <input type="hidden" asp-for="Codigo" />
+
+    <input asp-for="Grado" class="form-control mb-2" />
+    <input asp-for="Paralelo" class="form-control mb-2" />
+    <input asp-for="Paterno" class="form-control mb-2" />
+    <input asp-for="Materno" class="form-control mb-2" />
+    <input asp-for="Nombre" class="form-control mb-2" />
+
+    <div class="form-check">
+        <input asp-for="Habilitado" class="form-check-input" />
+        <label class="form-check-label">Habilitado</label>
+    </div>
+
+    <button class="btn btn-primary mt-2">Actualizar</button>
+    <a asp-action="Index" class="btn btn-secondary mt-2">Cancelar</a>
+
+</form>

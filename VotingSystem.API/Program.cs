@@ -24,7 +24,10 @@ builder.Services.AddScoped<IFileVotanteReader, CsvVotanteReader>();
 // UseCases
 builder.Services.AddScoped<VotarUseCase>();
 builder.Services.AddScoped<ObtenerResultadosUseCase>();
+builder.Services.AddScoped<ObtenerGradoParaleloUseCase>();
 builder.Services.AddScoped<ObtenerVotantesPorCursoUseCase>();
+builder.Services.AddScoped<ObtenerVotantesUseCase>();
+builder.Services.AddScoped<ObtenerVotanteUseCase>();
 builder.Services.AddScoped<ImportarVotantesCsvUseCase>();
 builder.Services.AddScoped<CrearVotanteUseCase>();
 builder.Services.AddScoped<ActualizarVotanteUseCase>();
@@ -47,11 +50,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
 app.UseCors("AllowBlazor");
 

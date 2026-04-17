@@ -11,4 +11,6 @@ public interface IVotanteRepository
     Task<List<Votante>> GetByGradoParaleloAsync(string grado, string paralelo);
     Task AddRangeAsync(List<Votante> votantes);
     Task<List<string>> GetCodigosByPrefixAsync(string prefix);
+    Task<List<string>> GetGradoParaleloAsync();
+    Task MakeAllAsync(bool habilitado);
 }

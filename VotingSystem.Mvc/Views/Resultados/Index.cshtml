@@ -1,0 +1,37 @@
+@model List<ResultadoViewModel>
+
+<h2>Resultados de la Votación</h2>
+
+<button class="btn btn-primary mb-3" onclick="location.reload()">
+    🔄 Actualizar
+</button>
+
+<table class="table table-bordered table-striped text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Candidato</th>
+            <th>Grupo</th>
+            <th>Votos</th>
+            <th>%</th>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        int posicion = 1;
+    }
+
+    @foreach (var r in Model)
+    {
+        <tr class="@(posicion == 1 ? "table-success" : "")">
+            <td>@posicion</td>
+            <td>@r.Nombre</td>
+            <td>@r.Grupo</td>
+            <td>@r.Votos</td>
+            <td>@r.Porcentaje.ToString("0.00") %</td>
+        </tr>
+
+        posicion++;
+    }
+    </tbody>
+</table>

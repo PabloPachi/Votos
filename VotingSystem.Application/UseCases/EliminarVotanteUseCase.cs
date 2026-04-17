@@ -15,11 +15,11 @@ public class EliminarVotanteUseCase
 
     public async Task Execute(string codigo)
     {
-        var votante = await _repo.GetByCodigoAsync(codigo);
+        var votante = await _repo.GetByCodigoAsync(codigo.ToUpper());
         if (votante == null)
             throw new Exception("Votante no encontrado");
         if (votante.YaVoto)
             throw new Exception("No se puede eliminar un votante que ya votó");
-        await _repo.DeleteAsync(codigo);
+        await _repo.DeleteAsync(codigo.ToUpper());
     }
 }

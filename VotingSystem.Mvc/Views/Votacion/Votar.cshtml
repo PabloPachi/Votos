@@ -1,0 +1,36 @@
+@{
+    Layout = "_LayoutVotacion";
+}
+
+@model List<CandidatoViewModel>
+<h4>Votante: @ViewBag.Nombre</h4>
+<h2 class="mb-4">Seleccione su candidato</h2>
+
+<div class="contenedor-candidatos">
+    @foreach (var c in Model)
+    {
+        <div class="card-candidato">
+
+            <form asp-action="Registrar" method="post">
+
+                <input type="hidden" name="candidatoId" value="@c.Id" />
+                <input type="hidden" name="codigo" value="@ViewBag.Codigo" />
+
+                <div class="img-container">
+                    <img src="@c.FotoUrl" />
+                </div>
+
+                <div class="info">
+                    <h4>@c.Nombre</h4>
+                    <p>@c.Grupo</p>
+                </div>
+
+                <button class="btn-votar">
+                    🗳️ VOTAR
+                </button>
+
+            </form>
+
+        </div>
+    }
+</div>
